@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine 💘</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+/* Card */
+.card {
+  background: white;
+  padding: 35px 45px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+  animation: pop 1s ease;
+  z-index: 2;
+}
+
+h1 {
+  color: #ff4d6d;
+  animation: pulse 1.5s infinite;
+}
+
+/* Buttons */
+.buttons {
+  margin-top: 20px;
+}
+
+button {
+  font-size: 18px;
+  padding: 12px 28px;
+  margin: 10px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+#yes {
+  background: #ff4d6d;
+  color: white;
+}
+
+#no {
+  background: #ddd;
+  position: absolute;
+}
+
+/* Popup */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.popup-content {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  width: 85%;
+  max-width: 350px;
+  animation: pop 0.5s ease;
+}
+
+.popup-content h2 {
+  color: #ff4d6d;
+}
+
+/* Hearts */
+.heart {
+  position: absolute;
+  color: #ff4d6d;
+  font-size: 20px;
+  animation: floatUp 5s linear infinite;
+}
+
+/* Animations */
+@keyframes pop {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>💘 Can you be my Valentine? 💘</h1>
+  <div class="buttons">
+    <button id="yes">Yes 💕</button>
+    <button id="no">No 😅</button>
+  </div>
+</div>
+
+<!-- Popup Message -->
+<div class="popup" id="popup">
+  <div class="popup-content">
+    <h2>THANK YOU VERY VERY MUCH!! 💖</h2>
+    <p>I WILL DO MY BEST TO MAKE YOUR VALENTINE'S DAY BETTER</p>
+  </div>
+</div>
+
+<!-- Music (add your own music.mp3) -->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// Floating hearts
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}
+setInterval(createHeart, 300);
+
+// YES button
+document.getElementById("yes").onclick = () => {
+  document.getElementById("music").play();
+  document.getElementById("popup").style.display = "flex";
+};
+
+// NO button moves (tap-proof)
+function moveNoButton() {
+  const no = document.getElementById("no");
+  no.style.left = Math.random() * 70 + "vw";
+  no.style.top = Math.random() * 70 + "vh";
+}
+
+document.getElementById("no").addEventListener("touchstart", moveNoButton);
+document.getElementById("no").addEventListener("mouseover", moveNoButton);
+document.getElementById("no").addEventListener("click", moveNoButton);
+</script>
+
+</body>
+  </html>
