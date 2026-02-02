@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Teddy Bear Valentine 💖</title>
+<title>Be My Valentine 💘</title>
+
 <style>
 body {
   margin: 0;
-  padding: 0;
   height: 100vh;
-  background: #ffe0e6;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,71 +16,157 @@ body {
   overflow: hidden;
 }
 
-.teddy {
-  position: relative;
-  width: 200px;
-  height: 250px;
-  background: #a56a45;
-  border-radius: 100px 100px 50px 50px;
-  display: flex;
+.card {
+  background: white;
+  padding: 35px 45px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.25);
+  animation: pop 1s ease;
+  z-index: 2;
+}
+
+h1 {
+  color: #ff4d6d;
+  animation: pulse 1.5s infinite;
+}
+
+.buttons {
+  margin-top: 20px;
+}
+
+button {
+  font-size: 18px;
+  padding: 12px 28px;
+  margin: 10px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+#yes {
+  background: #ff4d6d;
+  color: white;
+}
+
+#no {
+  background: #ddd;
+  position: absolute;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: none;
   justify-content: center;
-  align-items: flex-start;
-  animation: bounce 1.5s infinite;
+  align-items: center;
+  z-index: 10;
 }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+.popup-content {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  width: 85%;
+  max-width: 350px;
+  animation: pop 0.5s ease;
 }
 
-.ear { position: absolute; top: -30px; width: 50px; height: 50px; background: #a56a45; border-radius: 50%; }
-.ear.left { left: 0; }
-.ear.right { right: 0; }
+.popup-content h2 {
+  color: #ff4d6d;
+}
 
-.face { position: absolute; top: 40px; width: 150px; height: 120px; background: #d9a066; border-radius: 50%; }
+.heart {
+  position: absolute;
+  color: #ff4d6d;
+  font-size: 20px;
+  animation: floatUp 5s linear infinite;
+}
 
-.eye { position: absolute; top: 30px; width: 20px; height: 20px; background: #000; border-radius: 50%; }
-.eye.left { left: 30px; }
-.eye.right { right: 30px; }
+@keyframes pop {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
 
-.nose { position: absolute; top: 60px; left: 50%; transform: translateX(-50%); width: 15px; height: 10px; background: #000; border-radius: 50%; }
-.mouth { position: absolute; top: 70px; left: 50%; transform: translateX(-50%); width: 40px; height: 20px; border-bottom: 3px solid #000; border-radius: 50%; }
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
 
-.flower { position: absolute; bottom: 0; left: 160px; width: 30px; height: 60px; background: #0f8b3a; border-radius: 10px; }
-.petal { position: absolute; width: 20px; height: 20px; background: #ff4d6d; border-radius: 50%; top: -10px; left: 5px; }
+@keyframes floatUp {
+  0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+video {
+  display: none;
+}
 </style>
 </head>
+
 <body>
 
-<div class="teddy">
-  <div class="ear left"></div>
-  <div class="ear right"></div>
-  <div class="face">
-    <div class="eye left"></div>
-    <div class="eye right"></div>
-    <div class="nose"></div>
-    <div class="mouth"></div>
-  </div>
-  <div class="flower">
-    <div class="petal"></div>
+<div class="card">
+  <h1>💘 Can you be my Valentine? 💘</h1>
+  <div class="buttons">
+    <button id="yes">Yes 💕</button>
+    <button id="no">No 😅</button>
   </div>
 </div>
 
-<!-- Video -->
-<video id="musicVideo" loop style="display:none;">
-  <source src="heart.mp4" type="video/mp4">
-</video>
+<div class="popup" id="popup">
+  <div class="popup-content">
+    <h2>THANK YOU VERY VERY MUCH!! 💖</h2>
+    <p>I WILL DO MY BEST TO MAKE YOUR VALENTINE'S DAY BETTER</p>
+  </div>
+</div>
+
+<!-- Video elements -->
+<video id="yesVideo" src="yesMusic.mp4"></video>
+<video id="noVideo" src="noMusic.mp4"></video>
 
 <script>
-// Play video automatically on first tap
-let videoStarted = false;
-document.body.addEventListener("click", () => {
-  if (!videoStarted) {
-    const video = document.getElementById("musicVideo");
-    video.play();
-    videoStarted = true;
-  }
-}, { once: true });
+// Floating hearts
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}
+setInterval(createHeart, 300);
+
+// YES button
+document.getElementById("yes").onclick = () => {
+  const yesV = document.getElementById("yesVideo");
+  yesV.style.display = "block";
+  yesV.play();
+  document.getElementById("popup").style.display = "flex";
+};
+
+// NO button
+function moveNoButton() {
+  const no = document.getElementById("no");
+  no.style.left = Math.random() * 70 + "vw";
+  no.style.top = Math.random() * 70 + "vh";
+
+  const noV = document.getElementById("noVideo");
+  noV.style.display = "block";
+  noV.play();
+}
+
+document.getElementById("no").addEventListener("touchstart", moveNoButton);
+document.getElementById("no").addEventListener("mouseover", moveNoButton);
+document.getElementById("no").addEventListener("click", moveNoButton);
 </script>
 
 </body>
