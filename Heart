@@ -54,6 +54,7 @@ button {
   position: absolute;
 }
 
+/* Popup */
 .popup {
   position: fixed;
   top: 0;
@@ -81,6 +82,7 @@ button {
   color: #ff4d6d;
 }
 
+/* Hearts */
 .heart {
   position: absolute;
   color: #ff4d6d;
@@ -88,6 +90,7 @@ button {
   animation: floatUp 5s linear infinite;
 }
 
+/* Animations */
 @keyframes pop {
   from { transform: scale(0.5); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
@@ -105,7 +108,7 @@ button {
   100% { transform: translateY(-10vh) scale(1); opacity: 0; }
 }
 
-/* Hide videos */
+/* Hide video completely */
 video {
   display: none;
 }
@@ -129,9 +132,10 @@ video {
   </div>
 </div>
 
-<!-- Hidden videos, will only play on tap -->
-<video id="noVideo" src="heart.mp4"></video>
-<video id="noVideo" src="heart.mp4"></video>
+<!-- MP4 music (same behavior as 2nd code) -->
+<video id="musicVideo" loop>
+  <source src="copilot.mp4" type="video/mp4">
+</video>
 
 <script>
 // Floating hearts
@@ -146,26 +150,29 @@ function createHeart() {
 }
 setInterval(createHeart, 300);
 
-// YES button: play YES video (audio) and show popup
+// MP4 starts ONLY after first interaction (like 2nd code)
+let videoStarted = false;
+function startMusic() {
+  if (!videoStarted) {
+    document.getElementById("musicVideo").play();
+    videoStarted = true;
+  }
+}
+
+// YES button
 document.getElementById("yes").onclick = () => {
-  const yesV = document.getElementById("yesVideo");
-  yesV.currentTime = 0;  // start from beginning
-  yesV.play();            // play audio only
+  startMusic();
   document.getElementById("popup").style.display = "flex";
 };
 
-// NO button: move and play NO video (audio)
+// NO button moves + starts music
 function moveNoButton() {
+  startMusic();
   const no = document.getElementById("no");
   no.style.left = Math.random() * 70 + "vw";
   no.style.top = Math.random() * 70 + "vh";
-
-  const noV = document.getElementById("noVideo");
-  noV.currentTime = 0;  // restart each time
-  noV.play();            // play audio only
 }
 
-// Attach events to NO button
 const noBtn = document.getElementById("no");
 noBtn.addEventListener("touchstart", moveNoButton);
 noBtn.addEventListener("mouseover", moveNoButton);
