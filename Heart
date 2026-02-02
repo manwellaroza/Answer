@@ -134,7 +134,7 @@ video {
 
 <!-- MP4 music (same behavior as 2nd code) -->
 <video id="musicVideo" loop>
-  <source src="copilot.mp4" type="video/mp4">
+  <source src="heart.mp4" type="video/mp4">
 </video>
 
 <script>
