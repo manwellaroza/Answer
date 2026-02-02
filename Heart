@@ -130,7 +130,7 @@ video {
 </div>
 
 <!-- Hidden videos, will only play on tap -->
-<video id="yesVideo" src="heart.mp4"></video>
+<video id="noVideo" src="heart.mp4"></video>
 <video id="noVideo" src="heart.mp4"></video>
 
 <script>
